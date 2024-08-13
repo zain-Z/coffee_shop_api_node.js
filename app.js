@@ -80,6 +80,20 @@ app.put('/api/coffees/:id', (req, res) => {
 });
 
 
+// Deleting an item
+app.delete('/api/coffees/:id', (req, res) => {
+    // look up the item, if not, return 404
+    let coffee = coffees.find(c => c.id === parseInt(req.params.id));
+    if(!coffee) return res.status(404).send('The coffee with the given ID was not found');
+
+    // otherwise, delete it, and return the same item
+    const index = coffees.indexOf(coffee);
+    // splice method : we go to this index and remove 1 item
+    coffees.splice(index, 1); 
+    // returning the same item
+    res.send(coffee);
+
+});
 
 // Enviroment variable
 port = process.env.PORT || 3000;
